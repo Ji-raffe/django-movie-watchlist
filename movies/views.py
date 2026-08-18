@@ -1,9 +1,21 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
 from .models import Movie
 
 def home(request):
-    return render(request, 'movies/home.html')
+
+    query = request.GET.get('q', '')
+
+    if query:
+        movies = Movie.objects.filter(title__icontains=query).order_by('-date_added')
+    else:
+        movies = Movie.objects.all().order_by('-date_added')
+
+    movies = Movie.objects.all().order_by('-date_added')
+
+    return render(request, 'movies/home.html', {
+        'movies': movies,
+        'query': query
+    })
 
 
 def add_movie(request):
@@ -41,3 +53,23 @@ def add_movie(request):
         return redirect('/')
     
     return render(request, 'movies/add_movies.html')
+
+
+def edit_movie(request):
+    return render(request, "movie/add_movie.html")
+
+
+
+def delete_movie(request):
+    return render(request, "movie/home.html")
+
+def toggle_watched(request, pk):
+    movie = get_object_or_404(Movie, id=pk)
+    movie.is_watched = not movie.is_watched
+    movie.save()
+    return redirect('/')
+    
+
+
+
+    

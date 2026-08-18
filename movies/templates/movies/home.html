@@ -5,4 +5,56 @@
     Movie Watchlist!
 </h1>
 
+<form method="GET" action="{% url 'home' %}">
+    <label>Search Title:</label>
+    <input type="text" name="q" value="{{ query }}">
+    <button type="submit">Search</button>
+    {% if query %}
+        <a href="{% url 'home' %}">Clear</a>
+    {% endif %}
+</form>
+
+<table border="1">
+
+    <tr>
+        <th>Title</th>
+        <th>Genre</th>
+        <th>Release Year</th>
+        <th>Rating</th>
+        <th>Date Added</th>
+        <th>Is watched</th>
+        <th>Action</th>
+    </tr>
+    {% for movie in movies %}
+    <tr>
+        <td>{{movie.title}}</td>
+        <td>{{movie.genre}}</td>
+        <td>{{movie.release_year}}</td>
+        <td>{{movie.personal_rating}}</td>
+        <td>{{movie.date_added}}</td>
+        <td>            
+            <form action="{% url 'toggle_watched' movie.id %}" method="POST" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">
+                    {% if movie.is_watched %}Watched{% else %}Unwatched{% endif %}
+                </button>
+            </form>
+        </td>
+            
+        <td>
+            <a href="{% url 'edit_movie' movie.id %}">Edit</a> |
+
+            <a href="{% url 'delete_movie' movie.id %}" onclick="return confirm('Are you sure?');">Delete</a>
+        </td>
+
+    </tr>
+    {% endfor %}
+
+    
+
+
+</table>
+
+
+
 {% endblock %}
