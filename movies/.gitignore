@@ -1,0 +1,18 @@
+# Virtual Environment
+venv/
+env/
+.venv/
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# Environment / Secret Files
+.env
+.env.local
+secrets.json
+local_settings.py
+
+# OS files
+.DS_Store
+Thumbs.db

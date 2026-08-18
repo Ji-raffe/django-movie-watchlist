@@ -1,0 +1,46 @@
+{% extends "movies/base.html" %}
+{% block content %}
+
+<h1>Add Movie Information</h1>
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Title:</label><br>
+    <input
+    type="text"
+    name="title"
+    required><br><br>
+
+    <label>Genre:</label><br>
+    <input
+    type="text"
+    name="genre"><br><br>
+
+    <label>Release Year:</label><br>
+    <input
+    type="number"
+    name="release_year" min="1888" max="2100"><br><br>
+
+    <label>Rating (1-5)</label><br>
+    <select name="personal_rating">
+        <option value="">-- Select --</option>
+        <option value="1">1 - Poor</option>
+        <option value="2">2 - Disappoint</option>
+        <option value="3">3 - Average</option>
+        <option value="4">4 -Enjoyable</option>
+        <option value="5">5 - Masterpiece</option>
+    </select><br><br>
+
+    <label>Did you watch this movie ?</label><br>
+    <select name="is_watched">
+        <option value="">-- Select --</option>
+        <option value="True">Yes</option>
+        <option value="False">No</option>        
+    </select><br><br>
+
+    <button type="submit">Save</button>
+
+</form>
+
+
+{% endblock %}
