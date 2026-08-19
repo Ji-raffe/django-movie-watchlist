@@ -5,14 +5,6 @@
     Movie Watchlist!
 </h1>
 
-<!-- <form method="GET" action="{% url 'home' %}">
-    <label>Search Title:</label>
-    <input type="text" name="q" value="{{ query }}">
-    <button type="submit">Search</button>
-    {% if query %}
-        <a href="{% url 'home' %}">Clear</a>
-    {% endif %}
-</form> -->
 
 <form method="GET" action="{% url 'home' %}">
     <input type="text" name="q" value="{{ query }}" placeholder="Search title...">
@@ -41,7 +33,11 @@
             <form action="{% url 'toggle_watched' movie.id %}" method="POST" style="display:inline;">
                 {% csrf_token %}
                 <button type="submit">
-                    {% if movie.is_watched %}Watched{% else %}Unwatched{% endif %}
+                    {% if movie.is_watched %}
+                        <span class="text-success">Watched</span>
+                    {% else %}
+                        <span class="text-muted">Unwatched</span>
+                    {% endif %}
                 </button>
             </form>
         </td>
@@ -49,7 +45,7 @@
         <td>
             <a href="{% url 'edit_movie' movie.id %}">Edit</a> |
 
-            <a href="{% url 'delete_movie' movie.id %}" onclick="return confirm('Are you sure?');">Delete</a>
+            <a href="{% url 'delete_movie' movie.id %}" onclick="return confirm('Delete?');">Delete</a>
         </td>
 
     </tr>
