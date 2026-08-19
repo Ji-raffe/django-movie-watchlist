@@ -5,14 +5,19 @@
     Movie Watchlist!
 </h1>
 
-<form method="GET" action="{% url 'home' %}">
+<!-- <form method="GET" action="{% url 'home' %}">
     <label>Search Title:</label>
     <input type="text" name="q" value="{{ query }}">
     <button type="submit">Search</button>
     {% if query %}
         <a href="{% url 'home' %}">Clear</a>
     {% endif %}
-</form>
+</form> -->
+
+<form method="GET" action="{% url 'home' %}">
+    <input type="text" name="q" value="{{ query }}" placeholder="Search title...">
+    <button type="submit">Search</button>
+</form><br>
 
 <table border="1">
 

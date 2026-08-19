@@ -1,0 +1,26 @@
+{% extends "movies/base.html" %}
+{% block content %}
+
+<h2> Edit Movie: {{movie.tittle}}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Title:</label><br>
+    <input type="text" name="title" value="{{ movie.title }}" required><br><br>
+
+    <label>Genre:</label><br>
+    <input type="text" name="genre" value="{{ movie.genre }}"><br><br>
+
+    <label>Release Year:</label><br>
+    <input type="number" name="release_year" value="{{ movie.release_year }}"><br><br>
+
+    <label>Rating:</label><br>
+    <input type="number" name="personal_rating" value="{{ movie.personal_rating}}"><br><br>
+
+    <button type="submit">Update Movie</button>
+    <a href="{% url 'home' %}">Cancel</a>
+    
+</form>
+
+{% endblock %}

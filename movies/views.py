@@ -10,8 +10,7 @@ def home(request):
     else:
         movies = Movie.objects.all().order_by('-date_added')
 
-    movies = Movie.objects.all().order_by('-date_added')
-
+        
     return render(request, 'movies/home.html', {
         'movies': movies,
         'query': query
@@ -55,13 +54,41 @@ def add_movie(request):
     return render(request, 'movies/add_movies.html')
 
 
-def edit_movie(request):
-    return render(request, "movie/add_movie.html")
+def edit_movie(request, pk):
+
+    movie = get_object_or_404(Movie, id=pk)
+
+    if request.method == 'POST':
+
+        movie.title = request.POST.get('title')
+        movie.genre = request.POST.get('genre')
+
+        release_year = request.POST.get('release_year')
+        movie.release_year = int(release_year) if release_year else None
+
+        personal_rating = request.POST.get('personal_rating')
+        movie.personal_rating = int(personal_rating) if personal_rating else None
+
+        movie.is_watched = request.POST.get('is_watched') == 'True'
+
+        movie.save()
+
+        return redirect('/')
 
 
 
-def delete_movie(request):
-    return render(request, "movie/home.html")
+    return render(request, "movies/edit_movie.html", {'movie': movie})
+
+
+
+def delete_movie(request, pk):
+
+    movie = get_object_or_404(Movie, id=pk)
+
+    movie.delete()
+
+
+    return redirect("/")
 
 def toggle_watched(request, pk):
     movie = get_object_or_404(Movie, id=pk)
